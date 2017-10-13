@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Controller
-public class HomeController {
+public class DictionaryController {
 
 	@Autowired
 	DictionaryService dictionaryService;
