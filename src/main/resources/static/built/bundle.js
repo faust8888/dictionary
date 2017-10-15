@@ -66,13 +66,56 @@
 	
 	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
-	        _this.state = { words: [] };
+	        _this.state = { words: [], wordPosition: 0 };
+	        _this.incrementWordPosition = _this.incrementWordPosition.bind(_this);
+	        _this.decrementWordPosition = _this.decrementWordPosition.bind(_this);
+	        _this.getNext10Words = _this.getNext10Words.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(App, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
+	            this.getNext10Words();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            if (this.state.words[this.state.wordPosition] !== undefined) {
+	                return React.createElement(
+	                    'div',
+	                    null,
+	                    React.createElement(OneWord, { oneWord: this.state.words[this.state.wordPosition].word }),
+	                    React.createElement('br', null),
+	                    React.createElement(PrevWordButton, { handleClick: this.decrementWordPosition }),
+	                    React.createElement(NextWordButton, { handleClick: this.incrementWordPosition })
+	                );
+	            } else {
+	                return null;
+	            }
+	        }
+	    }, {
+	        key: 'incrementWordPosition',
+	        value: function incrementWordPosition() {
+	            var currentWordPosition = this.state.wordPosition;
+	
+	            if (currentWordPosition == 9) {
+	                this.getNext10Words();
+	                this.setState({ wordPosition: 0 });
+	            } else {
+	                var newWordPosition = currentWordPosition + 1;
+	                this.setState({ wordPosition: newWordPosition });
+	            }
+	        }
+	    }, {
+	        key: 'decrementWordPosition',
+	        value: function decrementWordPosition() {
+	            var position = this.state.wordPosition - 1;
+	            this.setState({ wordPosition: position });
+	        }
+	    }, {
+	        key: 'getNext10Words',
+	        value: function getNext10Words() {
 	            var _this2 = this;
 	
 	            fetch('http://localhost:8080/api/next').then(function (response) {
@@ -83,118 +126,80 @@
 	                console.error(error);
 	            });
 	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement(EmployeeList, { words: this.state.words });
-	        }
 	    }]);
 	
 	    return App;
 	}(React.Component);
 	
-	var EmployeeList = function (_React$Component2) {
-	    _inherits(EmployeeList, _React$Component2);
+	var OneWord = function (_React$Component2) {
+	    _inherits(OneWord, _React$Component2);
 	
-	    function EmployeeList(props) {
-	        _classCallCheck(this, EmployeeList);
+	    function OneWord() {
+	        _classCallCheck(this, OneWord);
 	
-	        var _this3 = _possibleConstructorReturn(this, (EmployeeList.__proto__ || Object.getPrototypeOf(EmployeeList)).call(this, props));
-	
-	        _this3._myHandler = _this3._myHandler.bind(_this3);
-	        return _this3;
+	        return _possibleConstructorReturn(this, (OneWord.__proto__ || Object.getPrototypeOf(OneWord)).apply(this, arguments));
 	    }
 	
-	    _createClass(EmployeeList, [{
-	        key: '_myHandler',
-	        value: function _myHandler(props) {
-	            console.log(props);
-	        }
-	    }, {
+	    _createClass(OneWord, [{
 	        key: 'render',
 	        value: function render() {
-	            var words = this.props.words.map(function (oneWord) {
-	                return React.createElement(Employee, { key: oneWord.word, word: oneWord });
-	            });
 	            return React.createElement(
-	                'table',
+	                'label',
 	                null,
-	                React.createElement(
-	                    'tbody',
-	                    null,
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Word'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Meaning'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Translate'
-	                        ),
-	                        React.createElement(
-	                            'th',
-	                            null,
-	                            'Context'
-	                        )
-	                    ),
-	                    words
-	                )
+	                this.props.oneWord
 	            );
 	        }
 	    }]);
 	
-	    return EmployeeList;
+	    return OneWord;
 	}(React.Component);
 	
-	var Employee = function (_React$Component3) {
-	    _inherits(Employee, _React$Component3);
+	var NextWordButton = function (_React$Component3) {
+	    _inherits(NextWordButton, _React$Component3);
 	
-	    function Employee() {
-	        _classCallCheck(this, Employee);
+	    function NextWordButton() {
+	        _classCallCheck(this, NextWordButton);
 	
-	        return _possibleConstructorReturn(this, (Employee.__proto__ || Object.getPrototypeOf(Employee)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (NextWordButton.__proto__ || Object.getPrototypeOf(NextWordButton)).apply(this, arguments));
 	    }
 	
-	    _createClass(Employee, [{
+	    _createClass(NextWordButton, [{
 	        key: 'render',
 	        value: function render() {
 	            return React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.word.word
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.word.meaning
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.word.translate
-	                ),
-	                React.createElement(
-	                    'td',
-	                    null,
-	                    this.props.word.context
-	                )
+	                'button',
+	                {
+	                    className: 'btn btn-default', onClick: this.props.handleClick },
+	                'Next'
 	            );
 	        }
 	    }]);
 	
-	    return Employee;
+	    return NextWordButton;
+	}(React.Component);
+	
+	var PrevWordButton = function (_React$Component4) {
+	    _inherits(PrevWordButton, _React$Component4);
+	
+	    function PrevWordButton() {
+	        _classCallCheck(this, PrevWordButton);
+	
+	        return _possibleConstructorReturn(this, (PrevWordButton.__proto__ || Object.getPrototypeOf(PrevWordButton)).apply(this, arguments));
+	    }
+	
+	    _createClass(PrevWordButton, [{
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                'button',
+	                {
+	                    className: 'btn btn-default', onClick: this.props.handleClick },
+	                'Prev'
+	            );
+	        }
+	    }]);
+	
+	    return PrevWordButton;
 	}(React.Component);
 	
 	ReactDOM.render(React.createElement(App, null), document.getElementById('react'));

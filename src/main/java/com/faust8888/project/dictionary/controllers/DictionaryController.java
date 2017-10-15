@@ -18,13 +18,13 @@ public class DictionaryController {
 	@Autowired
 	DictionaryService dictionaryService;
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/dictionary")
 	public String index() {
 		return "index";
 	}
 
 	@RequestMapping(value = "/api/next", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Word> next() {
-		return dictionaryService.getWords();
+		return dictionaryService.getWords(10);
 	}
 }

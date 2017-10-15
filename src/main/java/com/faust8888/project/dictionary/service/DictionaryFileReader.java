@@ -1,8 +1,8 @@
 package com.faust8888.project.dictionary.service;
 
 import com.faust8888.project.dictionary.exception.DictionaryInvalidFormatRuntimeException;
-import com.faust8888.project.dictionary.items.Word;
-import com.faust8888.project.dictionary.items.WordBuilder;
+import com.faust8888.project.dictionary.items.*;
+import com.faust8888.project.dictionary.items.Dictionary;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -27,30 +27,36 @@ public class DictionaryFileReader {
     private static final int CONTEXT_COLUMN = 3;
 
 
-    public List<Word> readDictionary(final String fileName) throws Exception {
+    public Dictionary readDictionary(final String fileName) throws Exception {
         Iterator<Sheet> sheetIterator = createSheetIterator(fileName);
         return read(sheetIterator);
     }
 
-    private List<Word> read(final Iterator<Sheet> sheetIterator) {
-        List<Word> wordList = new ArrayList<>();
+    private Dictionary read(final Iterator<Sheet> sheetIterator) {
+        Map<String, Word> wordMap = new HashMap<>();
         while (sheetIterator.hasNext()) {
-            Sheet sheet = sheetIterator.next();
-            Iterator<Row> rowIterator = sheet.rowIterator();
-            List<Word> words = readRows(rowIterator, sheet.getPhysicalNumberOfRows());
-            wordList.addAll(words);
+            Map<String, Word> oneSheetWordMap = createMapWord(sheetIterator.next());
+            wordMap.putAll(oneSheetWordMap);
         }
-        return wordList;
+        return new Dictionary(wordMap);
     }
 
-    private List<Word> readRows(Iterator<Row> rowIterator, int countRows) {
-        List<Word> wordList = new ArrayList<>(countRows);
+    private Map<String, Word> createMapWord(final Sheet sheet) {
+        Iterator<Row> rowIterator = sheet.rowIterator();
+        return readRows(rowIterator, sheet.getPhysicalNumberOfRows());
+    }
+
+    private Map<String, Word> readRows(Iterator<Row> rowIterator, int countRows) {
+        Map<String,Word> mapWord = new HashMap<>(countRows);
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             Word word = createWord(row);
-            wordList.add(word);
+            if(mapWord.containsKey(word.getWord())) {
+                continue;
+            }
+            mapWord.put(word.getWord(), word);
         }
-        return wordList;
+        return mapWord;
     }
 
     private Iterator<Sheet> createSheetIterator(final String fileName) throws Exception{

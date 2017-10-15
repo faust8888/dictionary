@@ -39,7 +39,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	//@Override
 	public void run(String... strings) throws Exception {
-		//List<Word> words = dictionaryService.getWords();
+		//List<Word> words = dictionaryService.getAllWords();
 		//this.repository.save(words.get(1));
 	}
 }

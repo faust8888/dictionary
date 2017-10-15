@@ -9,10 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
-//@Entity
 public final class Word {
 
-    //private @Id @GeneratedValue Long id;
     private String word;
     private String translate;
     private String context;

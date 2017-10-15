@@ -8,63 +8,79 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {words: []};
+        this.state = {words: [], wordPosition: 0};
+        this.incrementWordPosition = this.incrementWordPosition.bind(this);
+        this.decrementWordPosition = this.decrementWordPosition.bind(this);
+        this.getNext10Words = this.getNext10Words.bind(this);
     }
 
     componentWillMount() {
+        this.getNext10Words();
+    }
+
+    render() {
+        if(this.state.words[this.state.wordPosition] !== undefined) {
+            return (
+                <div>
+                    <OneWord oneWord={this.state.words[this.state.wordPosition].word}/>
+                    <br/>
+                    <PrevWordButton handleClick={this.decrementWordPosition}/>
+                    <NextWordButton handleClick={this.incrementWordPosition}/>
+                </div>
+            )
+        } else {
+            return null;
+        }
+    }
+
+    incrementWordPosition() {
+        var currentWordPosition = this.state.wordPosition;
+
+        if(currentWordPosition == 9) {
+            this.getNext10Words();
+            this.setState({wordPosition: 0});
+        } else {
+            var newWordPosition = currentWordPosition + 1;
+            this.setState({wordPosition: newWordPosition});
+        }
+    }
+
+    decrementWordPosition() {
+        var position = this.state.wordPosition - 1;
+        this.setState({wordPosition: position})
+    }
+
+    getNext10Words() {
         fetch('http://localhost:8080/api/next')
             .then((response) => response.json())
             .then((responseJson) => {this.setState({words: responseJson}); console.log(responseJson)})
             .catch((error) => { console.error(error); });
-
-    }
-
-    render() {
-        return (
-			<EmployeeList words={this.state.words}/>
-        )
-    }
-}
-
-class EmployeeList extends React.Component{
-
-    constructor(props) {
-        super(props);
-        this._myHandler = this._myHandler.bind(this);
-    }
-
-    _myHandler(props) {
-        console.log(props);
-    }
-
-    render() {
-        var words = this.props.words.map(oneWord => <Employee key={oneWord.word} word={oneWord}/>);
-        return (
-			<table>
-				<tbody>
-				<tr>
-					<th>Word</th>
-					<th>Meaning</th>
-					<th>Translate</th>
-					<th>Context</th>
-				</tr>
-                {words}
-				</tbody>
-			</table>
-        )
     }
 }
 
 
-class Employee extends React.Component{
+class OneWord extends React.Component {
     render() {
-        return (
-			<tr>
-				<td>{this.props.word.word}</td>
-				<td>{this.props.word.meaning}</td>
-				<td>{this.props.word.translate}</td>
-				<td>{this.props.word.context}</td>
-			</tr>
+        return(
+            <label>{this.props.oneWord}</label>
+        )
+    }
+}
+
+class NextWordButton extends React.Component {
+    render() {
+        return(
+            <button
+                className="btn btn-default" onClick={this.props.handleClick}>Next</button>
+        )
+    }
+}
+
+class PrevWordButton extends React.Component {
+    render() {
+        return(
+            <button
+                className="btn btn-default" onClick={this.props.handleClick}>Prev</button>
         )
     }
 }
