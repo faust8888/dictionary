@@ -6926,7 +6926,7 @@
 	var invariant = __webpack_require__(12);
 	
 	/**
-	 * Accumulates items that must not be null or undefined into the first one. This
+	 * Accumulates viewItems that must not be null or undefined into the first one. This
 	 * is used to conserve memory by avoiding array allocations, and thus sacrifices
 	 * API cleanness. Since `current` can be null before being passed in and not
 	 * null after this function, make sure to assign it back to `current`:
@@ -6935,11 +6935,11 @@
 	 *
 	 * This API should be sparingly used. Try `accumulate` for something cleaner.
 	 *
-	 * @return {*|array<*>} An accumulation of items.
+	 * @return {*|array<*>} An accumulation of viewItems.
 	 */
 	
 	function accumulateInto(current, next) {
-	  !(next != null) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'accumulateInto(...): Accumulated items must not be null or undefined.') : _prodInvariant('30') : void 0;
+	  !(next != null) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'accumulateInto(...): Accumulated viewItems must not be null or undefined.') : _prodInvariant('30') : void 0;
 	
 	  if (current == null) {
 	    return next;
@@ -6983,9 +6983,9 @@
 	'use strict';
 	
 	/**
-	 * @param {array} arr an "accumulation" of items which is either an Array or
+	 * @param {array} arr an "accumulation" of viewItems which is either an Array or
 	 * a single item. Useful when paired with the `accumulate` module. This is a
-	 * simple utility that allows us to reason about a collection of items, but
+	 * simple utility that allows us to reason about a collection of viewItems, but
 	 * handling the case when there is exactly one item (and we do not need to
 	 * allocate an array).
 	 */
@@ -15962,7 +15962,7 @@
 	    try {
 	      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
 	    } catch (e) {
-	      // Roll back to checkpoint, handle error (which may add items to the transaction), and take a new checkpoint
+	      // Roll back to checkpoint, handle error (which may add viewItems to the transaction), and take a new checkpoint
 	      transaction.rollback(checkpoint);
 	      this._instance.unstable_handleError(e);
 	      if (this._pendingStateQueue) {
@@ -22672,8 +22672,8 @@
 		 * contain promises and values
 		 * @param {Array|Promise} promises array of promises and values
 		 * @param {function(x:*, index:Number):boolean} predicate filtering predicate.
-		 *  Must return truthy (or promise for truthy) for items to retain.
-		 * @returns {Promise} promise that will fulfill with an array containing all items
+		 *  Must return truthy (or promise for truthy) for viewItems to retain.
+		 * @returns {Promise} promise that will fulfill with an array containing all viewItems
 		 *  for which predicate returned truthy.
 		 */
 		function filter(promises, predicate) {
@@ -23021,7 +23021,7 @@
 				var nReject;
 				var x, i; // reused in both for() loops
 	
-				// First pass: count actual array items
+				// First pass: count actual array viewItems
 				for(i=0; i<l; ++i) {
 					x = promises[i];
 					if(x === void 0 && !(i in promises)) {
@@ -23097,8 +23097,8 @@
 			 * contain promises and values
 			 * @param {Array} promises array of promises and values
 			 * @param {function(x:*, index:Number):boolean} predicate filtering predicate.
-			 *  Must return truthy (or promise for truthy) for items to retain.
-			 * @returns {Promise} promise that will fulfill with an array containing all items
+			 *  Must return truthy (or promise for truthy) for viewItems to retain.
+			 * @returns {Promise} promise that will fulfill with an array containing all viewItems
 			 *  for which predicate returned truthy.
 			 */
 			function filter(promises, predicate) {
@@ -25309,10 +25309,10 @@
 			 *   response.follow({ rel: 'next', params: { pageSize: 100 } })
 			 *
 			 *   response.follow([
-			 *       { rel: 'items', params: { projection: 'noImages' } },
+			 *       { rel: 'viewItems', params: { projection: 'noImages' } },
 			 *       'search',
 			 *       { rel: 'findByGalleryIsNull', params: { projection: 'noImages' } },
-			 *       'items'
+			 *       'viewItems'
 			 *   ])
 			 *
 			 * @param {String|Object|Array} rels one, or more, relationships to follow

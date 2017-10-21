@@ -1,8 +1,8 @@
 package com.faust8888.project.dictionary.service;
 
 import com.faust8888.project.dictionary.exception.DictionaryInvalidFormatRuntimeException;
-import com.faust8888.project.dictionary.items.*;
-import com.faust8888.project.dictionary.items.Dictionary;
+import com.faust8888.project.dictionary.viewItems.*;
+import com.faust8888.project.dictionary.viewItems.DictionaryView;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -27,34 +27,34 @@ public class DictionaryFileReader {
     private static final int CONTEXT_COLUMN = 3;
 
 
-    public Dictionary readDictionary(final String fileName) throws Exception {
+    public DictionaryView readDictionary(final String fileName) throws Exception {
         Iterator<Sheet> sheetIterator = createSheetIterator(fileName);
         return read(sheetIterator);
     }
 
-    private Dictionary read(final Iterator<Sheet> sheetIterator) {
-        Map<String, Word> wordMap = new HashMap<>();
+    private DictionaryView read(final Iterator<Sheet> sheetIterator) {
+        Map<String, WordView> wordMap = new HashMap<>();
         while (sheetIterator.hasNext()) {
-            Map<String, Word> oneSheetWordMap = createMapWord(sheetIterator.next());
+            Map<String, WordView> oneSheetWordMap = createMapWord(sheetIterator.next());
             wordMap.putAll(oneSheetWordMap);
         }
-        return new Dictionary(wordMap);
+        return new DictionaryView(wordMap);
     }
 
-    private Map<String, Word> createMapWord(final Sheet sheet) {
+    private Map<String, WordView> createMapWord(final Sheet sheet) {
         Iterator<Row> rowIterator = sheet.rowIterator();
         return readRows(rowIterator, sheet.getPhysicalNumberOfRows());
     }
 
-    private Map<String, Word> readRows(Iterator<Row> rowIterator, int countRows) {
-        Map<String,Word> mapWord = new HashMap<>(countRows);
+    private Map<String, WordView> readRows(Iterator<Row> rowIterator, int countRows) {
+        Map<String,WordView> mapWord = new HashMap<>(countRows);
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
-            Word word = createWord(row);
-            if(mapWord.containsKey(word.getWord())) {
+            WordView wordView = createWord(row);
+            if(mapWord.containsKey(wordView.getWord())) {
                 continue;
             }
-            mapWord.put(word.getWord(), word);
+            mapWord.put(wordView.getWord(), wordView);
         }
         return mapWord;
     }
@@ -66,7 +66,7 @@ public class DictionaryFileReader {
         return workbook.sheetIterator();
     }
 
-    private Word createWord(final Row row) {
+    private WordView createWord(final Row row) {
         WordBuilder wordBuilder = new WordBuilder();
 
         int count = 0;
@@ -89,7 +89,7 @@ public class DictionaryFileReader {
                     wordBuilder.setContext(value);
                     break;
                 default:
-                    throw new DictionaryInvalidFormatRuntimeException("Invalid Dictionary Format.");
+                    throw new DictionaryInvalidFormatRuntimeException("Invalid DictionaryView Format.");
             }
             count++;
             if(wordBuilder.isWordReady()) {

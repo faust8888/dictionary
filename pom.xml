@@ -12,11 +12,11 @@
 	</parent>
 
 	<groupId>com.faust8888</groupId>
-	<artifactId>dictionary</artifactId>
+	<artifactId>dictionaryView</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>dictionary</name>
+	<name>dictionaryView</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -94,6 +94,12 @@
 			<artifactId>json</artifactId>
 			<version>20170516</version>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.39</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

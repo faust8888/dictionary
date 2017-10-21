@@ -1,29 +1,29 @@
-package com.faust8888.project.dictionary.items;
+package com.faust8888.project.dictionary.viewItems;
 
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public final class Dictionary {
+public final class DictionaryView {
 
-    private final Map<String, Word> wordMap;
+    private final Map<String, WordView> wordMap;
     private final Iterator<String> wordIterator;
 
-    public Dictionary(final Map<String,Word> wordMap) {
+    public DictionaryView(final Map<String,WordView> wordMap) {
         this.wordMap = wordMap;
         this.wordIterator = wordMap.keySet().iterator();
     }
 
-    public Stream<Map.Entry<String, Word>> getWordMapEntryStream() {
+    public Stream<Map.Entry<String, WordView>> getWordMapEntryStream() {
         return wordMap.entrySet().stream();
     }
 
-    public Word getNextWord() {
+    public WordView getNextWord() {
         if(wordIterator.hasNext()) {
             return wordMap.get(wordIterator.next());
         } else {
-             throw new RuntimeException("Dictionary is empty.");
+             throw new RuntimeException("DictionaryView is empty.");
         }
     }
 

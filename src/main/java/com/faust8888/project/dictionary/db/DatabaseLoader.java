@@ -15,14 +15,9 @@
  */
 package com.faust8888.project.dictionary.db;
 
-import com.faust8888.project.dictionary.items.Word;
 import com.faust8888.project.dictionary.service.DictionaryFileReader;
 import com.faust8888.project.dictionary.service.DictionaryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 //@Component
 public class DatabaseLoader implements CommandLineRunner {
@@ -39,7 +34,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	//@Override
 	public void run(String... strings) throws Exception {
-		//List<Word> words = dictionaryService.getAllWords();
+		//List<WordView> words = dictionaryService.getAllWords();
 		//this.repository.save(words.get(1));
 	}
 }

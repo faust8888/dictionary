@@ -1,8 +1,9 @@
-package com.faust8888.project.dictionary;
+package com.faust8888.project;
 
 import com.faust8888.project.dictionary.spring.DictionaryInit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
 

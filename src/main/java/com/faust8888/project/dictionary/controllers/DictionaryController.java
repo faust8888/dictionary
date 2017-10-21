@@ -1,7 +1,8 @@
 package com.faust8888.project.dictionary.controllers;
 
 
-import com.faust8888.project.dictionary.items.Word;
+import com.faust8888.project.dictionary.db.dao.WordDAO;
+import com.faust8888.project.dictionary.viewItems.WordView;
 import com.faust8888.project.dictionary.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,16 @@ public class DictionaryController {
 	@Autowired
 	DictionaryService dictionaryService;
 
+	@Autowired
+	WordDAO wordDAO;
+
 	@RequestMapping(value = "/dictionary")
 	public String index() {
 		return "index";
 	}
 
 	@RequestMapping(value = "/api/next", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Word> next() {
+	public @ResponseBody List<WordView> next() {
 		return dictionaryService.getWords(10);
 	}
 }

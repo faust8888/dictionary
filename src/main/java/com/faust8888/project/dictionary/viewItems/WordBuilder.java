@@ -1,4 +1,4 @@
-package com.faust8888.project.dictionary.items;
+package com.faust8888.project.dictionary.viewItems;
 
 
 public class WordBuilder {
@@ -28,8 +28,8 @@ public class WordBuilder {
         return this;
     }
 
-    public Word buildWord() {
-        return new Word(word, translate, context, meaning);
+    public WordView buildWord() {
+        return new WordView(word, translate, context, meaning);
     }
 
     public boolean isWordReady() {

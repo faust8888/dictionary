@@ -1,6 +1,6 @@
 package com.faust8888.project.dictionary.spring;
 
-import com.faust8888.project.dictionary.items.Dictionary;
+import com.faust8888.project.dictionary.viewItems.DictionaryView;
 import com.faust8888.project.dictionary.service.DictionaryFileReader;
 import com.faust8888.project.dictionary.service.DictionaryService;
 import org.springframework.beans.BeansException;
@@ -18,8 +18,8 @@ public class DictionaryInit implements BeanPostProcessor {
         if (bean instanceof DictionaryService) {
             DictionaryService dictionaryService = (DictionaryService)bean;
             try {
-                Dictionary dictionary = dictionaryFileReader.readDictionary("Words.xlsx");
-                dictionaryService.installDictionary(dictionary);
+                DictionaryView dictionaryView = dictionaryFileReader.readDictionary("Words.xlsx");
+                dictionaryService.installDictionary(dictionaryView);
             } catch (Exception e) {
                 System.out.println("DictionaryInit Exception. Couldn't load dictionary: " + e.getMessage());
             }
