@@ -19,11 +19,20 @@ class BaseDAO <T, S> {
         return sessionFactory;
     }
 
-    protected Session getSession() {
-        return sessionFactory.getCurrentSession();
+    public Session getSession() {
+        return sessionFactory.openSession();
     }
 
-    protected T getById(Long id) {
+    public T getById(Long id) {
         return getSession().get(type, id);
+    }
+
+    public S save(T entity) {
+        return (S) getSession().save(entity);
+    }
+
+    public void flush() {
+        getSession().flush();
+        getSession().clear();;
     }
 }

@@ -1,29 +1,29 @@
 package com.faust8888.project.dictionary.viewItems;
 
 
-public class WordBuilder {
+public class WordViewBuilder {
 
     private String word;
     private String translate;
     private String context;
     private String meaning;
 
-    public WordBuilder setWord(String word) {
+    public WordViewBuilder setWord(String word) {
         this.word = word;
         return this;
     }
 
-    public WordBuilder setTranslate(String translate) {
+    public WordViewBuilder setTranslate(String translate) {
         this.translate = translate;
         return this;
     }
 
-    public WordBuilder setContext(String context) {
+    public WordViewBuilder setContext(String context) {
         this.context = context;
         return this;
     }
 
-    public WordBuilder setMeaning(String meaning) {
+    public WordViewBuilder setMeaning(String meaning) {
         this.meaning = meaning;
         return this;
     }

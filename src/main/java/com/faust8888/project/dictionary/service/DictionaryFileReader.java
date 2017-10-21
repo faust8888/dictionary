@@ -35,7 +35,14 @@ public class DictionaryFileReader {
     private DictionaryView read(final Iterator<Sheet> sheetIterator) {
         Map<String, WordView> wordMap = new HashMap<>();
         while (sheetIterator.hasNext()) {
-            Map<String, WordView> oneSheetWordMap = createMapWord(sheetIterator.next());
+            Sheet sheet = sheetIterator.next();
+
+            //TODO: need to change in the future
+            if(sheet.getSheetName().equals("Phrases") || sheet.getSheetName().equals("Topics")) {
+                continue;
+            }
+
+            Map<String, WordView> oneSheetWordMap = createMapWord(sheet);
             wordMap.putAll(oneSheetWordMap);
         }
         return new DictionaryView(wordMap);
@@ -46,7 +53,7 @@ public class DictionaryFileReader {
         return readRows(rowIterator, sheet.getPhysicalNumberOfRows());
     }
 
-    private Map<String, WordView> readRows(Iterator<Row> rowIterator, int countRows) {
+    private Map<String, WordView> readRows(final Iterator<Row> rowIterator,final int countRows) {
         Map<String,WordView> mapWord = new HashMap<>(countRows);
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
@@ -67,7 +74,7 @@ public class DictionaryFileReader {
     }
 
     private WordView createWord(final Row row) {
-        WordBuilder wordBuilder = new WordBuilder();
+        WordViewBuilder wordViewBuilder = new WordViewBuilder();
 
         int count = 0;
         Iterator<Cell> cellIterator = row.cellIterator();
@@ -77,25 +84,25 @@ public class DictionaryFileReader {
 
             switch (count) {
                 case WORD_COLUMN:
-                    wordBuilder.setWord(value);
+                    wordViewBuilder.setWord(value);
                     break;
                 case MEANING_COLUMN:
-                    wordBuilder.setMeaning(value);
+                    wordViewBuilder.setMeaning(value);
                     break;
                 case TRANSLATE_COLUMN:
-                    wordBuilder.setTranslate(value);
+                    wordViewBuilder.setTranslate(value);
                     break;
                 case CONTEXT_COLUMN:
-                    wordBuilder.setContext(value);
+                    wordViewBuilder.setContext(value);
                     break;
                 default:
                     throw new DictionaryInvalidFormatRuntimeException("Invalid DictionaryView Format.");
             }
             count++;
-            if(wordBuilder.isWordReady()) {
+            if(wordViewBuilder.isWordReady()) {
                 break;
             }
         }
-        return wordBuilder.buildWord();
+        return wordViewBuilder.buildWord();
     }
 }

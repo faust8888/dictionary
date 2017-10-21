@@ -9,7 +9,7 @@ public final class WordView {
 
     public WordView() {}
 
-    public WordView(String word, String translate, String context, String meaning) {
+    public WordView(final String word, final String translate, final String context, final String meaning) {
         this.word = word;
         this.translate = translate;
         this.context = context;
@@ -22,5 +22,29 @@ public final class WordView {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public String getTranslate() {
+        return translate;
+    }
+
+    public void setTranslate(String translate) {
+        this.translate = translate;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    public String getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
     }
 }

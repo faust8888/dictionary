@@ -14,7 +14,7 @@ public class DictionaryInit implements BeanPostProcessor {
     private DictionaryFileReader dictionaryFileReader;
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(final Object bean,final String beanName) throws BeansException {
         if (bean instanceof DictionaryService) {
             DictionaryService dictionaryService = (DictionaryService)bean;
             try {
@@ -29,7 +29,7 @@ public class DictionaryInit implements BeanPostProcessor {
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(final Object bean,final String beanName) throws BeansException {
         return bean;
     }
 }

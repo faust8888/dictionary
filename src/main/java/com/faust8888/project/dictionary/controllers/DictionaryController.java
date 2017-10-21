@@ -19,9 +19,6 @@ public class DictionaryController {
 	@Autowired
 	DictionaryService dictionaryService;
 
-	@Autowired
-	WordDAO wordDAO;
-
 	@RequestMapping(value = "/dictionary")
 	public String index() {
 		return "index";
