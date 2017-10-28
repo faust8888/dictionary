@@ -1,8 +1,13 @@
 'use strict';
 
+import TableComponent from './components/tableComponent'
+import NextWordButton from './components/nextButtonComponent'
+import PrevWordButton from './components/prevButtonComponent'
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
+
 
 class App extends React.Component {
 
@@ -26,6 +31,7 @@ class App extends React.Component {
                     <br/>
                     <PrevWordButton handleClick={this.decrementWordPosition}/>
                     <NextWordButton handleClick={this.incrementWordPosition}/>
+                    <TableComponent words={this.state.words}/>
                 </div>
             )
         } else {
@@ -58,29 +64,13 @@ class App extends React.Component {
     }
 }
 
+export default App;
+
 
 class OneWord extends React.Component {
     render() {
         return(
             <label>{this.props.oneWord}</label>
-        )
-    }
-}
-
-class NextWordButton extends React.Component {
-    render() {
-        return(
-            <button
-                className="btn btn-default" onClick={this.props.handleClick}>Next</button>
-        )
-    }
-}
-
-class PrevWordButton extends React.Component {
-    render() {
-        return(
-            <button
-                className="btn btn-default" onClick={this.props.handleClick}>Prev</button>
         )
     }
 }
