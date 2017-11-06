@@ -107,6 +107,8 @@
 	                    React.createElement('br', null),
 	                    React.createElement(_prevButtonComponent2.default, { handleClick: this.decrementWordPosition }),
 	                    React.createElement(_nextButtonComponent2.default, { handleClick: this.incrementWordPosition }),
+	                    React.createElement('br', null),
+	                    React.createElement('br', null),
 	                    React.createElement(_tableComponent2.default, { words: this.state.words })
 	                );
 	            } else {

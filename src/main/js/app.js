@@ -31,6 +31,7 @@ class App extends React.Component {
                     <br/>
                     <PrevWordButton handleClick={this.decrementWordPosition}/>
                     <NextWordButton handleClick={this.incrementWordPosition}/>
+                    <br/><br/>
                     <TableComponent words={this.state.words}/>
                 </div>
             )

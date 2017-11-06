@@ -1,7 +1,5 @@
 package com.faust8888.project.dictionary.controllers;
 
-
-import com.faust8888.project.dictionary.db.dao.WordDAO;
 import com.faust8888.project.dictionary.viewItems.WordView;
 import com.faust8888.project.dictionary.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;

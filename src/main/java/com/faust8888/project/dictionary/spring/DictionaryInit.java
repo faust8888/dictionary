@@ -1,7 +1,7 @@
 package com.faust8888.project.dictionary.spring;
 
-import com.faust8888.project.dictionary.viewItems.DictionaryView;
 import com.faust8888.project.dictionary.service.DictionaryFileReader;
+import com.faust8888.project.dictionary.viewItems.DictionaryView;
 import com.faust8888.project.dictionary.service.DictionaryService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

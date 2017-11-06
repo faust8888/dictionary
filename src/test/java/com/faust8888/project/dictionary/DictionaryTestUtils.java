@@ -4,12 +4,15 @@ package com.faust8888.project.dictionary;
 import com.faust8888.project.dictionary.db.items.*;
 import com.faust8888.project.dictionary.viewItems.WordView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class DictionaryTestUtils {
+
+    public static final String NAME_DICTIONARY_TEST_FILE_BY_DEFAULT = "test_dictionary.xlsx";
 
     public static Dictionary createDictionaryTest(List<Map.Entry<String, WordView>> mapWordEntries) {
         User user = new User();
@@ -24,6 +27,16 @@ public class DictionaryTestUtils {
         dictionary.setDictionaryContents(contents);
 
         return dictionary;
+    }
+
+    public static boolean isTestDictionaryFileExists() {
+        File dictionaryFile = new File(NAME_DICTIONARY_TEST_FILE_BY_DEFAULT);
+        return dictionaryFile.exists();
+    }
+
+    public static void deleteTestDictionaryFile() {
+        File dictionaryFile = new File(NAME_DICTIONARY_TEST_FILE_BY_DEFAULT);
+        dictionaryFile.delete();
     }
 
     private static List<DictionaryContent> createDictionaryContents(Dictionary dictionary, List<Map.Entry<String, WordView>> mapWordEntries) {

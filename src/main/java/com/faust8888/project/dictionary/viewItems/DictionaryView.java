@@ -1,8 +1,7 @@
 package com.faust8888.project.dictionary.viewItems;
 
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 public final class DictionaryView {
@@ -17,6 +16,10 @@ public final class DictionaryView {
 
     public Stream<Map.Entry<String, WordView>> getWordMapEntryStream() {
         return wordMap.entrySet().stream();
+    }
+
+    public List<WordView> getWordList() {
+        return new ArrayList(wordMap.values());
     }
 
     public WordView getNextWord() {
