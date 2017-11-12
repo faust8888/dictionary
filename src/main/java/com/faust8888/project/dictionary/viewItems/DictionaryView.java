@@ -6,10 +6,12 @@ import java.util.stream.Stream;
 
 public final class DictionaryView {
 
+    private final String dictionaryName;
     private final Map<String, WordView> wordMap;
     private final Iterator<String> wordIterator;
 
-    public DictionaryView(final Map<String,WordView> wordMap) {
+    public DictionaryView(final String dictionaryName, final Map<String,WordView> wordMap) {
+        this.dictionaryName = dictionaryName;
         this.wordMap = wordMap;
         this.wordIterator = wordMap.keySet().iterator();
     }
@@ -32,5 +34,9 @@ public final class DictionaryView {
 
     public boolean isEmpty() {
         return wordMap.keySet().size() > 0;
+    }
+
+    public String getDictionaryName() {
+        return dictionaryName;
     }
 }

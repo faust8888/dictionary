@@ -54,7 +54,7 @@ public class ExcelUtils {
             Map<String, WordView> oneSheetWordMap = createMapWord(sheet);
             wordMap.putAll(oneSheetWordMap);
         }
-        return new DictionaryView(wordMap);
+        return new DictionaryView(fileName, wordMap);
     }
 
     private static Map<String, WordView> createMapWord(final Sheet sheet) {

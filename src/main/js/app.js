@@ -3,6 +3,8 @@
 import TableComponent from './components/tableComponent'
 import NextWordButton from './components/nextButtonComponent'
 import PrevWordButton from './components/prevButtonComponent'
+import NewWordDiaogComponent from './components/newWordDialogComponent'
+import InfoDictionaryComponent from './components/infoDictionaryComponent'
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -31,6 +33,10 @@ class App extends React.Component {
                     <br/>
                     <PrevWordButton handleClick={this.decrementWordPosition}/>
                     <NextWordButton handleClick={this.incrementWordPosition}/>
+                    <br/>
+                    <InfoDictionaryComponent/>
+                    <br/>
+                    <NewWordDiaogComponent />
                     <br/><br/>
                     <TableComponent words={this.state.words}/>
                 </div>

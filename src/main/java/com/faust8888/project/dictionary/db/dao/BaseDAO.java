@@ -1,8 +1,11 @@
 package com.faust8888.project.dictionary.db.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 class BaseDAO <T, S> {
 
@@ -24,15 +27,23 @@ class BaseDAO <T, S> {
     }
 
     public T getById(Long id) {
-        return getSession().get(type, id);
+        return getSessionFactory().getCurrentSession().get(type, id);
     }
 
     public S save(T entity) {
-        return (S) getSession().save(entity);
+        return (S) getSessionFactory().getCurrentSession().save(entity);
+    }
+
+    public void update(T entity) {
+        getSessionFactory().getCurrentSession().update(entity);
+    }
+
+    public Criteria createCriteria() {
+        return getSessionFactory().getCurrentSession().createCriteria(type);
     }
 
     public void flush() {
-        getSession().flush();
-        getSession().clear();;
+        getSessionFactory().getCurrentSession().flush();
+        getSessionFactory().getCurrentSession().clear();;
     }
 }

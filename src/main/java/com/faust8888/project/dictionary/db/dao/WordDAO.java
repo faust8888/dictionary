@@ -15,13 +15,4 @@ public class WordDAO extends BaseDAO<Word,Long> {
         super(Word.class);
     }
 
-    public Long saveWord(WordView wordView) {
-        Word word = new Word();
-        word.setWord(wordView.getWord());
-        word.setMeaning(wordView.getMeaning());
-        word.setTranslate(wordView.getTranslate());
-        word.setContext(wordView.getContext());
-
-        return save(word);
-    }
 }

@@ -26,7 +26,7 @@ public class Dictionary {
     @Column(name = "content")
     private Blob content;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dictionary", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dictionary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DictionaryContent> dictionaryContents;
 
     public Long getId() {

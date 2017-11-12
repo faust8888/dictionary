@@ -17,13 +17,6 @@ public class DictionaryInit implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(final Object bean,final String beanName) throws BeansException {
         if (bean instanceof DictionaryService) {
             DictionaryService dictionaryService = (DictionaryService)bean;
-            try {
-                DictionaryView dictionaryView = dictionaryFileReader.readDictionary("Words.xlsx");
-                dictionaryService.installDictionary(dictionaryView);
-            } catch (Exception e) {
-                System.out.println("DictionaryInit Exception. Couldn't load dictionary: " + e.getMessage());
-            }
-
         }
         return bean;
     }
@@ -31,5 +24,15 @@ public class DictionaryInit implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(final Object bean,final String beanName) throws BeansException {
         return bean;
+    }
+
+    //ONLY FOR DEVELOPMENT
+    private void installDictionary(final DictionaryService dictionaryService){
+        try {
+            DictionaryView dictionaryView = dictionaryFileReader.readDictionary("Words.xlsx");
+            dictionaryService.installDictionary(dictionaryView);
+        } catch (Exception e) {
+            System.out.println("DictionaryInit Exception. Couldn't load dictionary: " + e.getMessage());
+        }
     }
 }
