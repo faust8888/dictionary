@@ -1,5 +1,6 @@
 'use strict';
 
+import 'babel-polyfill';
 import TableComponent from './components/tableComponent'
 import NextWordButton from './components/nextButtonComponent'
 import PrevWordButton from './components/prevButtonComponent'
@@ -8,21 +9,17 @@ import InfoDictionaryComponent from './components/infoDictionaryComponent'
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const client = require('./client');
-
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {words: [], wordPosition: 0};
+        this.state = {words: [], wordPosition: 0, dictionaryName: '', countOfWords: ''};
+        this.loadDictionaryInfo = this.loadDictionaryInfo.bind(this);
+        this.updateDictionaryInfo = this.updateDictionaryInfo.bind(this);
         this.incrementWordPosition = this.incrementWordPosition.bind(this);
         this.decrementWordPosition = this.decrementWordPosition.bind(this);
         this.getNext10Words = this.getNext10Words.bind(this);
-    }
-
-    componentWillMount() {
-        this.getNext10Words();
     }
 
     render() {
@@ -34,9 +31,9 @@ class App extends React.Component {
                     <PrevWordButton handleClick={this.decrementWordPosition}/>
                     <NextWordButton handleClick={this.incrementWordPosition}/>
                     <br/>
-                    <InfoDictionaryComponent/>
+                    <InfoDictionaryComponent dictionaryName={this.state.dictionaryName} countOfWords={this.state.countOfWords}/>
                     <br/>
-                    <NewWordDiaogComponent />
+                    <NewWordDiaogComponent onSave={this.updateDictionaryInfo}/>
                     <br/><br/>
                     <TableComponent words={this.state.words}/>
                 </div>
@@ -63,10 +60,29 @@ class App extends React.Component {
         this.setState({wordPosition: position})
     }
 
+    componentWillMount() {
+        this.getNext10Words();
+        this.loadDictionaryInfo();
+    }
+
     getNext10Words() {
         fetch('http://localhost:8080/api/next')
-            .then((response) => response.json())
-            .then((responseJson) => {this.setState({words: responseJson}); console.log(responseJson)})
+            .then((words) => words.json())
+            .then((wordsJSON) => {this.setState({words: wordsJSON})})
+            .catch((error) => { console.error(error); });
+    }
+
+    updateDictionaryInfo(dictionaryName, countOfWords) {
+        this.setState({dictionaryName: dictionaryName, countOfWords: countOfWords})
+    }
+
+    loadDictionaryInfo() {
+        fetch('http://localhost:8080/api/dictionaryInfo')
+            .then((dictionaryInfo) => dictionaryInfo.json())
+            .then((dictionaryInfoJSON) =>
+                {this.setState(
+                     {dictionaryName: dictionaryInfoJSON.dictionaryName, countOfWords: dictionaryInfoJSON.countOfWords}
+                )})
             .catch((error) => { console.error(error); });
     }
 }

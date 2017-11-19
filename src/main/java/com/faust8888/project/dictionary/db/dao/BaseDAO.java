@@ -31,7 +31,9 @@ class BaseDAO <T, S> {
     }
 
     public S save(T entity) {
-        return (S) getSessionFactory().getCurrentSession().save(entity);
+        S id = (S) getSessionFactory().getCurrentSession().save(entity);
+        getSessionFactory().getCurrentSession().flush();
+        return id;
     }
 
     public void update(T entity) {

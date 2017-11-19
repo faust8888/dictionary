@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -51,9 +52,10 @@ public class DictionaryService {
         this.dictionary = dictionary;
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveWord(final WordView wordView) {
         Word word = DictionaryConvertorUtils.createWord(wordView);
-        dictionaryDAO.addWord(dictionary, word);
+        dictionaryContentDAO.addWord(dictionary, word);
     }
 
     public WordView getWord() {
@@ -71,8 +73,8 @@ public class DictionaryService {
     }
 
     public DictionaryInfoView getDictionaryInfo() {
-        String dictionaryName = dictionaryView.getDictionaryName();
-        Long countOfWords = dictionaryView.getWordMapEntryStream().count();
+        String dictionaryName = dictionary.getName();
+        Integer countOfWords = dictionary.getDictionaryContents().size();
 
         return new DictionaryInfoView(dictionaryName, countOfWords);
     }

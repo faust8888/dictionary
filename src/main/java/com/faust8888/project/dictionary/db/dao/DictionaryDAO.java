@@ -17,16 +17,6 @@ public class DictionaryDAO extends BaseDAO<Dictionary, Long> {
         super(Dictionary.class);
     }
 
-    public void addWord(final Dictionary dictionary, final Word word) {
-        DictionaryContent dictionaryContent = new DictionaryContent();
-        dictionaryContent.setDictionary(dictionary);
-        dictionaryContent.setWord(word);
-        dictionaryContent.setStatusId(WordStatusEnum.NORMAL.getStatusId());
-
-        dictionary.getDictionaryContents().add(dictionaryContent);
-        update(dictionary); //TODO: In next time, i should repair this
-    }
-
     public Dictionary getDictionaryByName(final String name) {
         return (Dictionary) createCriteria()
                 .add(Restrictions.eq("name", name))

@@ -1,17 +1,17 @@
+import 'babel-polyfill';
 import React from 'react';
-import SkyLight from 'react-skylight';
+import {SkyLightStateless} from 'react-skylight';
 
 class NewWordDialogComponent extends React.Component {
     constructor(props){
         super(props);
-        this.state = {word: '', translate: '', meaning: '', context: ''};
-
-        this.handleWord = this.handleWord.bind(this);
-        this.handleTranslate = this.handleTranslate.bind(this);
-        this.handleMeaning = this.handleMeaning.bind(this);
-        this.handleContext = this.handleContext.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.saveWord = this.saveWord.bind(this);
+        this.state = {
+            word: '',
+            translate: '',
+            meaning: '',
+            context: '',
+            showNewWordDialog: false
+        };
     }
 
     handleWord(event) {
@@ -30,13 +30,25 @@ class NewWordDialogComponent extends React.Component {
         this.setState({context: event.target.value});
     }
 
-    handleSubmit(event) {
-        this.saveWord();
-        this.simpleDialog.hide();
+    tagleNewWordDialog() {
+        this.setState({showNewWordDialog: !this.state.showNewWordDialog})
     }
 
-    saveWord() {
-        fetch('http://localhost:8080/api/saveWord', {
+    handleSubmit() {
+        this.saveWord();
+        this.clearInputFields();
+        this.tagleNewWordDialog();
+    }
+
+    clearInputFields() {
+        this.setState({word: ''})
+        this.setState({translate: ''})
+        this.setState({meaning: ''})
+        this.setState({context: ''})
+    }
+
+    async saveWord() {
+        var responseAfterSaving = await fetch('http://localhost:8080/api/saveWord', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -48,17 +60,26 @@ class NewWordDialogComponent extends React.Component {
                 meaning: this.state.meaning,
                 context: this.state.context
             })
-        })
+        });
+        const dictionaryInfoJSON = await responseAfterSaving.json();
+        this.props.onSave(dictionaryInfoJSON.dictionaryName, dictionaryInfoJSON.countOfWords);
+    }
+
+    hideDialog() {
+        this.setState({showDialog: false})
+    }
+
+    showDialog() {
+        this.setState({showDialog: true})
     }
 
     render() {
         return (
             <div>
                 <section>
-                    <button onClick={() => this.simpleDialog.show()}>New Word</button>
+                    <button onClick={() => this.tagleNewWordDialog()}>New Word</button>
                 </section>
-                <SkyLight hideOnOverlayClicked ref={ref => this.simpleDialog = ref} title="Create New Word">
-                    <form onSubmit={this.handleSubmit}>
+                <SkyLightStateless isVisible={this.state.showNewWordDialog} onCloseClicked={() => {this.tagleNewWordDialog()}} title="Create New Word">
                         <label>
                             Word:
                             <input type="text" value={this.state.word} onChange={this.handleWord} />
@@ -75,9 +96,8 @@ class NewWordDialogComponent extends React.Component {
                             Context:
                             <input type="text" value={this.state.context} onChange={this.handleContext} />
                         </label>
-                        <input type="submit" value="Save"/>
-                    </form>
-                </SkyLight>
+                    <button onClick={() => this.handleSubmit()}>Save</button>
+                </SkyLightStateless>
             </div>
         )
     }

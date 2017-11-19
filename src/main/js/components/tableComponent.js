@@ -6,8 +6,6 @@ import ReactDataGrid from 'react-data-grid';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
-const ReactDOM = require('react-dom');
-
 class TableComponent extends React.Component {
 
     constructor(props) {

@@ -4,9 +4,9 @@ package com.faust8888.project.dictionary.viewItems;
 public class DictionaryInfoView {
 
     private String dictionaryName;
-    private Long countOfWords;
+    private Integer countOfWords;
 
-    public DictionaryInfoView(final String dictionaryName, final Long countOfWords) {
+    public DictionaryInfoView(final String dictionaryName, final Integer countOfWords) {
         this.dictionaryName = dictionaryName;
         this.countOfWords = countOfWords;
     }
@@ -19,11 +19,11 @@ public class DictionaryInfoView {
         this.dictionaryName = dictionaryName;
     }
 
-    public Long getCountOfWords() {
+    public Integer getCountOfWords() {
         return countOfWords;
     }
 
-    public void setCountOfWords(Long countOfWords) {
+    public void setCountOfWords(Integer countOfWords) {
         this.countOfWords = countOfWords;
     }
 }

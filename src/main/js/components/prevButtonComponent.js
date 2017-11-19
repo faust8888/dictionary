@@ -1,9 +1,6 @@
 'use strict';
 
-import update from 'react-addons-update';
-
 const React = require('react');
-const ReactDOM = require('react-dom');
 
 class PrevWordButton extends React.Component {
 

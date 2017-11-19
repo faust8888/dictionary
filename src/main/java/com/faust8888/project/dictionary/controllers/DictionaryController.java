@@ -39,9 +39,9 @@ public class DictionaryController {
 	}
 
 	@RequestMapping(value = "/api/saveWord", method = RequestMethod.POST)
-	public ResponseEntity<WordView> saveWord(@RequestBody WordView word) {
+	public @ResponseBody DictionaryInfoView saveWord(@RequestBody WordView word) {
 		dictionaryService.saveWord(word);
-		return new ResponseEntity<WordView>(word, HttpStatus.OK);
+		return dictionaryInfo();
 	}
 
 	@RequestMapping(value = "/api/dictionaryInfo", method = RequestMethod.GET, produces = "application/json")
